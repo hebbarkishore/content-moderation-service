@@ -45,7 +45,7 @@ public class ContentModerationService {
     private UserRepository userRepository;
 
     private final String queueUrl = "https://sqs.<region>.amazonaws.com/<account-id>/<queue-name>";
-    private final String endpointName = "<your-sagemaker-endpoint-name>";  // Replace with your SageMaker endpoint name
+    private final String endpointName = "sagemaker-endpoint-name";
 
 
     @JmsListener(destination = "your-sqs-queue-name")
@@ -57,6 +57,11 @@ public class ContentModerationService {
         }
     }
 
+    /**
+     * This processes the file and send the validation status
+     * @param sqsMessage
+     * @throws Exception
+     */
     public void processFile(String sqsMessage) throws Exception {
         // Parse SQS message to extract file details (bucket and key)
         String bucketName = extractBucketName(sqsMessage);
